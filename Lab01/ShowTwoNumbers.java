@@ -1,7 +1,5 @@
 // Example 5: ShowTwoNumbers.java
-
 import javax.swing.JOptionPane;
-
 public class ShowTwoNumbers {
 
     public static void main(String[] args) {
@@ -10,7 +8,7 @@ public class ShowTwoNumbers {
         strNuml = JOptionPane.showInputDialog(null, "Please input the first number: ",
                 "Input the first number",
                 JOptionPane.INFORMATION_MESSAGE);
-        strNotification += strNuml + " and";
+        strNotification += strNuml + " and ";
 
         strNum2 = JOptionPane.showInputDialog(null, "Please input the second number: ",
                 "Input the second number",
