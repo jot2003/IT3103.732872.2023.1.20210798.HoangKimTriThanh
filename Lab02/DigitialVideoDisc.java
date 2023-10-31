@@ -1,7 +1,7 @@
 /**
 
 */
-// package Lab02;
+package Lab02;
 
 public class DigitialVideoDisc {
     private String title;
