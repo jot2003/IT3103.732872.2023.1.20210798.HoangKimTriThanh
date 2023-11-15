@@ -1,0 +1,7 @@
+Question:
+•	After the call of swap(jungleDVD, cinderellaDVD) why does the title of these two objects still remain? 
+•	After the call of changeTitle(jungleDVD, cinderellaDVD.getTitle()) why is the title of the JungleDVD changed?
+Aswer:
+In Java, parameters are passed by value, meaning the values of the arguments are passed to the parameters of a method. However, when it comes to objects, the value passed is a reference to the object, not the actual object itself. Therefore, when swapping o1 and o2 in the swap() method, the external state remains unchanged.
+
+In contrast, in the changeTitle() method, the title is genuinely modified by using setTitle() so the title is effectively changed.
