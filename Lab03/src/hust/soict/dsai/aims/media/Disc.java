@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package hust.soict.hedspi.aims.media;
 
 public class Disc extends Media {
@@ -22,6 +23,21 @@ public class Disc extends Media {
 		this.length = length;
 	}
 
+=======
+package hust.soict.dsai.aims.media;
+
+public class Disc extends Media {
+	private int length;
+	private String director;
+
+	public Disc(int id, String title, String category, float cost, int length, String director) {
+		super(id, title, category, cost);
+		this.length = length;
+		this.director = director;
+	}
+
+	//Getter methods
+>>>>>>> c80e12231ada33f8938cbf8cdd39920fac8544fc
 	public int getLength() {
 		return length;
 	}
@@ -29,6 +45,7 @@ public class Disc extends Media {
 	public String getDirector() {
 		return director;
 	}
+<<<<<<< HEAD
 
 	public Disc(String title, String category, float cost, int length, String director) {
 		// TODO Auto-generated constructor stub
@@ -42,3 +59,9 @@ public class Disc extends Media {
 	}
 
 }
+=======
+	public String toString() {
+		return "Disc - " + super.toString() + " - " + "Director: " + director + " - " + "Length: " + length;
+	}
+}
+>>>>>>> c80e12231ada33f8938cbf8cdd39920fac8544fc

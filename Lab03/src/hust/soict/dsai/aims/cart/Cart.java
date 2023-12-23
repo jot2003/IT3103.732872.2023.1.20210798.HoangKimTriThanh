@@ -1,4 +1,12 @@
+<<<<<<< HEAD
 package hust.soict.hedspi.aims.cart;
+=======
+package hust.soict.dsai.aims.cart;
+
+import java.util.ArrayList;
+
+import hust.soict.dsai.aims.media.Media;
+>>>>>>> c80e12231ada33f8938cbf8cdd39920fac8544fc
 
 import java.util.Collections;
 
@@ -6,6 +14,7 @@ import hust.soict.hedspi.aims.media.Media;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 public class Cart {
+<<<<<<< HEAD
 
 	public static final int MAX_NUMBERS_ORDERED = 20;
 
@@ -34,10 +43,38 @@ public class Cart {
         } catch (Exception e) {
             System.err.println("Error calculating total cost: " + e.getMessage());
             e.printStackTrace();
+=======
+    private ArrayList<Media> itemsOrdered = new ArrayList<Media>();
+
+    //  addMedia and removeMedia method
+    public void addMedia(Media media) {
+        if (itemsOrdered.contains(media)) {
+            System.out.println("Already has this media");
+        } else {
+            itemsOrdered.add(media);
+            System.out.println("Media added successfully");
+        }
+    }
+
+    public void removeMedia(Media media) {
+        if (itemsOrdered.contains(media)) {
+            itemsOrdered.remove(media);
+            System.out.println("Media remove successfully");
+        } else
+            System.out.println("Media not found");
+    }
+
+    //  get total cost method
+    public float totalCost() {
+        float cost = 0;
+        for (Media media : itemsOrdered) {
+            cost += media.getCost();
+>>>>>>> c80e12231ada33f8938cbf8cdd39920fac8544fc
         }
         return cost;
     }
 
+<<<<<<< HEAD
 	public void searchById(int id) {
         System.out.println("Search results for ID: " + id);
         try {
@@ -46,11 +83,21 @@ public class Cart {
                     System.out.println(m.toString());
                     return;
                 }
+=======
+    //  search by id and by title method
+    public void searchById(int id) {
+        for (Media media : itemsOrdered) {
+            if (media.getId() == id) {
+                System.out.println("Tri Thanh Media founded:");
+                System.out.println(media.toString());
+                return;
+>>>>>>> c80e12231ada33f8938cbf8cdd39920fac8544fc
             }
         } catch (Exception e) {
             System.err.println("Error searching by ID: " + e.getMessage());
             e.printStackTrace();
         }
+<<<<<<< HEAD
         System.out.println("No items found.");
     }
 
@@ -80,11 +127,23 @@ public class Cart {
             for (Media m : itemsOrdered) {
                 if (m.isMatch(title))
                     return m;
+=======
+        System.out.println("Tri Thanh No match found with id: " + id);
+    }
+
+    public void searchByTitle(String title) {
+        for (Media media : itemsOrdered) {
+            if (media.getTitle().equals(title)) {
+                System.out.println("Tri Thanh Media founded:");
+                System.out.println(media.toString());
+                return;
+>>>>>>> c80e12231ada33f8938cbf8cdd39920fac8544fc
             }
         } catch (Exception e) {
             System.err.println("Error fetching media: " + e.getMessage());
             e.printStackTrace();
         }
+<<<<<<< HEAD
         return null;
     }
 	public void placeOrder() {
@@ -94,4 +153,8 @@ public class Cart {
 	public ObservableList<Media> getItemsOrdered() {
 		return itemsOrdered;
 	}
+=======
+        System.out.println("Tri Thanh No match found with title: " + title);
+    }
+>>>>>>> c80e12231ada33f8938cbf8cdd39920fac8544fc
 }

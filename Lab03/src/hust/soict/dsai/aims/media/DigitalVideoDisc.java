@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package hust.soict.hedspi.aims.media;
 
 import javax.swing.JOptionPane;
@@ -67,8 +68,29 @@ public class DigitalVideoDisc extends Disc implements Playable {
 			}
 	}
 
+=======
+package hust.soict.dsai.aims.media;
+
+public class DigitalVideoDisc extends Disc implements Playable {
+
+    // Tri Thanh 210798: Modified in lab 04
+    public DigitalVideoDisc(int id, String title, String category, float cost, int length, String director) {
+        super(id, title, category, cost, length, director);
+    }
+
+    @Override
+    public void play() {
+        System.out.println("Playing DVD: " + this.getTitle());
+        System.out.println("DVD length: " + this.getLength());
+    }
+    
+>>>>>>> c80e12231ada33f8938cbf8cdd39920fac8544fc
     @Override
     public String toString() {
         return "DVD - " + super.toString();
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> c80e12231ada33f8938cbf8cdd39920fac8544fc
