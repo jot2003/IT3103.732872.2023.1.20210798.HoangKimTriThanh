@@ -1,34 +1,46 @@
-package hust.soict.dsai.aims.store;
-import hust.soict.dsai.aims.disc.DigitalVideoDisc;
+package hust.soict.hedspi.aims.store;
+
+import java.util.ArrayList;
+
+import hust.soict.hedspi.aims.media.Media;
+
 
 public class Store {
-    public static final int MAX_NUMBERS_IN_STORE = 999;
-    private DigitalVideoDisc itemsInStore[] = new DigitalVideoDisc[MAX_NUMBERS_IN_STORE];
-    private int qtyInStore = 0; // To keep track of how many DigitalVideoDiscs are in the cart
+	private static final int STORE_LIMIT = 10;
+    private ArrayList<Media> itemsInStore = new ArrayList<Media>();
 
-    public void addDVD(DigitalVideoDisc disc) {
-        if (qtyInStore < MAX_NUMBERS_IN_STORE) { //Not already full
-            itemsInStore[qtyInStore] = disc;
-            qtyInStore++;
-            System.out.println("Tri Thanh: The disc has been added");
-        } else { // Full
-            System.out.println("Tri Thanh: Store is full!");
+    public void addMedia(Media media) {
+        itemsInStore.add(0, media);
+        System.out.println("Added " + media.toString() + " successfully.");
         }
-    }
 
-    public void removeDVD(DigitalVideoDisc disc) {
-        for (int i = 0; i < qtyInStore; i++) {
-            if (itemsInStore[i].equals(disc)) {
-                // Put the element behind
-                for (int j = i; j < qtyInStore - 1; j++) {
-                    itemsInStore[j] = itemsInStore[j + 1];
-                }
-                qtyInStore--;
-                System.out.println("Tri Thanh: The disc has been remove");
-                return;
+    public void removeMedia(Media media) {
+        try {
+            if (itemsInStore.remove(media)) {
+                System.out.println("Removed " + media.toString() + " from store.");
+            } else {
+                System.out.println("Couldn't find this item.");
             }
+        } catch (Exception e) {
+            System.err.println("Error removing media from store: " + e.getMessage());
+            e.printStackTrace();
         }
-        System.out.println("Tri Thanh: Can't find this disc");
     }
 
+    public Media fetchMedia(String title) {
+        try {
+            for (Media m : itemsInStore) {
+                if (m.isMatch(title))
+                    return m;
+            }
+        } catch (Exception e) {
+            System.err.println("Error fetching media from store: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ArrayList<Media> getItemsInStore() {
+        return itemsInStore;
+    }
 }

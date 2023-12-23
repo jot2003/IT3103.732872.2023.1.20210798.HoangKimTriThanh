@@ -1,101 +1,97 @@
-package hust.soict.dsai.aims.cart;
-import hust.soict.dsai.aims.disc.DigitalVideoDisc;
+package hust.soict.hedspi.aims.cart;
 
+import java.util.Collections;
+
+import hust.soict.hedspi.aims.media.Media;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 public class Cart {
-    public static final int MAX_NUMBERS_ORDERED = 20;
-    private DigitalVideoDisc itemsOrdered[] = new DigitalVideoDisc[MAX_NUMBERS_ORDERED];
-    private int qtyOrdered = 0; //To keep track of how many DigitalVideoDiscs are in the cart
 
-    public void addDigitalVideoDisc(DigitalVideoDisc disc) {
-        if (qtyOrdered < MAX_NUMBERS_ORDERED) { // Not already full
-            itemsOrdered[qtyOrdered] = disc;
-            qtyOrdered++;
-            System.out.println("Tri Thanh: The disc has been added");
-        } else { // Full
-            System.out.println("Tri Thanh: The cart is almost full");
-        }
-    }
+	public static final int MAX_NUMBERS_ORDERED = 20;
 
-    public void addDigitalVideoDisc(DigitalVideoDisc[] discList) {
-        int numbersOrdered = discList.length;
-        if ((qtyOrdered + numbersOrdered - 1) < MAX_NUMBERS_ORDERED) { //Not full yet
-            for (DigitalVideoDisc x : discList) {
-                itemsOrdered[qtyOrdered] = x;
-                qtyOrdered++;
-            }
-            System.out.println("Tri Thanh: The disc's list has been added");
-        } else { //Full
-            System.out.println("Tri Thanh: The cart is almost full");
-        }
-    }
+	private ObservableList<Media> itemsOrdered = FXCollections.observableArrayList();
 
-    public void addDigitalVideoDisc(DigitalVideoDisc dvd1, DigitalVideoDisc dvd2) {
-        if ((qtyOrdered + 1) < MAX_NUMBERS_ORDERED) { // Not already full
-            itemsOrdered[qtyOrdered] = dvd1;
-            qtyOrdered++;
-            itemsOrdered[qtyOrdered] = dvd2;
-            qtyOrdered++;
-            System.out.println("Tri Thanh: Two disc has been added");
-        } else { // Full
-            System.out.println("Tri Thanh: The cart is almost full");
-        }
-    }
+	public void addMedia(Media media) {
+		
+		
+		itemsOrdered.add(media);
+	}
 
-    public void removeDigitalVideoDisc(DigitalVideoDisc disc) {
-        for (int i = 0; i < qtyOrdered; i++) {
-            if (itemsOrdered[i].equals(disc)) {
-                // Tri Thanh: Put the element behind
-                for (int j = i; j < qtyOrdered - 1; j++) {
-                    itemsOrdered[j] = itemsOrdered[j + 1];
-                }
-                qtyOrdered--;
-                System.out.println("Tri Thanh: The disc has been remove");
-                return;
-            }
-        }
-        System.out.println("Tri Thanh: Can't find this disc");
-    }
+	public void removeMedia(Media media) {
+		if (itemsOrdered.remove(media)) {
+			System.out.println("Removed " + media.toString() + " from cart.");
+		} else {
+			System.out.println("Couldn't find this item.");
+		}
+	}
 
-    public float totalCost() {
+	public float totalCost() {
         float cost = 0;
-        for (int i = 0; i < qtyOrdered; i++) {
-            cost += itemsOrdered[i].getCost();
+        try {
+            for (Media m : itemsOrdered) {
+                cost += m.getCost();
+            }
+        } catch (Exception e) {
+            System.err.println("Error calculating total cost: " + e.getMessage());
+            e.printStackTrace();
         }
         return cost;
     }
 
-    public void print() {
-        System.out.println("***********************CART***********************");
-        System.out.println("Ordered Items:");
-
-        for (int i = 0; i < qtyOrdered; i++) {
-            System.out.println((i + 1) + ". " + itemsOrdered[i].toString() + ": " + itemsOrdered[i].getCost() + " $");
-        }
-
-        System.out.println("Total cost: " + totalCost());
-        System.out.println("***************************************************");
-    }
-
-    public void searchById(int id) {
-        for (int i = 0; i < qtyOrdered; i++) {
-            if (itemsOrdered[i].getId() == id) {
-                System.out.println("Tri Thanh: DVD founded:");
-                System.out.println(itemsOrdered[i].toString() + ": " + itemsOrdered[i].getCost() + " $");
-                return;
+	public void searchById(int id) {
+        System.out.println("Search results for ID: " + id);
+        try {
+            for (Media m : itemsOrdered) {
+                if (m.getId() == id) {
+                    System.out.println(m.toString());
+                    return;
+                }
             }
+        } catch (Exception e) {
+            System.err.println("Error searching by ID: " + e.getMessage());
+            e.printStackTrace();
         }
-        System.out.println("Tri Thanh: No match found with id: " + id);
+        System.out.println("No items found.");
     }
 
-    public void searchByTitle(String title) {
-        for (int i = 0; i < qtyOrdered; i++) {
-            if (itemsOrdered[i].isMatch(title)) {
-                System.out.println("Tri Thanh: DVD founded:");
-                System.out.println(itemsOrdered[i].toString() + ": " + itemsOrdered[i].getCost() + " $");
-                return;
+	public void searchByTitle(String title) {
+		boolean found = false;
+		System.out.println("Search results for keywords: " + title);
+		for (Media m : itemsOrdered) {
+			if (m.isMatch(title)) {
+				System.out.println(m.toString());
+				found = true;
+			}
+		}
+		if (!found)
+			System.out.println("No items found.");
+	}
+
+	public void sortByTitle() {
+		Collections.sort(itemsOrdered, Media.COMPARE_BY_TITLE_COST);
+	}
+
+	public void sortByCost() {
+		Collections.sort(itemsOrdered, Media.COMPARE_BY_COST_TITLE);
+	}
+
+	public Media fetchMedia(String title) {
+        try {
+            for (Media m : itemsOrdered) {
+                if (m.isMatch(title))
+                    return m;
             }
+        } catch (Exception e) {
+            System.err.println("Error fetching media: " + e.getMessage());
+            e.printStackTrace();
         }
-        System.out.println("Tri Thanh: No match found with title: " + title);
+        return null;
     }
+	public void placeOrder() {
+		itemsOrdered.clear();
+	}
 
+	public ObservableList<Media> getItemsOrdered() {
+		return itemsOrdered;
+	}
 }
